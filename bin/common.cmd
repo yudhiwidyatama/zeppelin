@@ -40,7 +40,7 @@ if not defined ZEPPELIN_WAR (
     ) else (
         
         for /F "delims=" %%d in ('dir /B %ZEPPELIN_HOME%\zeppelin-web*.war ^| findstr zeppelin-web-[0-9].*') do (
-           set ZEPPELIN_WAR=%%d
+           set ZEPPELIN_WAR=%ZEPPELIN_HOME%\%%d
         )
         
     )
