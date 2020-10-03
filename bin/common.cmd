@@ -33,15 +33,29 @@ if not defined ZEPPELIN_PID_DIR (
     set ZEPPELIN_PID_DIR=%ZEPPELIN_HOME%\run
 )
 
+REM no easy way to separate zeppelin-web-nnn and zeppelin-web-angular-mmm
 if not defined ZEPPELIN_WAR (
     if exist "%ZEPPELIN_HOME%\zeppelin-web\dist" (
         set ZEPPELIN_WAR=%ZEPPELIN_HOME%\zeppelin-web\dist
     ) else (
-        for %%d in ("%ZEPPELIN_HOME%\zeppelin-web*.war") do (
-            set ZEPPELIN_WAR=%%d
+        
+        for /F "delims=" %%d in ('dir /B %ZEPPELIN_HOME%\zeppelin-web*.war ^| findstr zeppelin-web-[0-9].*') do (
+           set ZEPPELIN_WAR=%%d
+        )
+        
+    )
+)
+
+if not defined ZEPPELIN_ANGULAR_WAR (
+    if exist "%ZEPPELIN_HOME%\zeppelin-web\dist" (
+        set ZEPPELIN_ANGULAR_WAR=%ZEPPELIN_HOME%\zeppelin-web-angular\dist\zeppelin
+    ) else (
+        for %%d in ("%ZEPPELIN_HOME%\zeppelin-web-angular*.war") do (
+            set ZEPPELIN_ANGULAR_WAR=%%d
         )
     )
 )
+
 
 if exist "%ZEPPELIN_CONF_DIR%\zeppelin-env.cmd" (
     call "%ZEPPELIN_CONF_DIR%\zeppelin-env.cmd"
