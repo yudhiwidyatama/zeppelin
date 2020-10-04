@@ -91,8 +91,15 @@ if not defined JAVA_OPTS (
     set JAVA_OPTS=%JAVA_OPTS% %ZEPPELIN_JAVA_OPTS%
 )
 
+set ZEPPELIN_CONF_DIRW=%ZEPPELIN_CONF_DIR:\=/%
+set JAVA_OPTS=%JAVA_OPTS% -Dlog4j.configuration=file:/!ZEPPELIN_CONF_DIRW!/log4j.properties
 
 set JAVA_INTP_OPTS=%ZEPPELIN_INTP_JAVA_OPTS% -Dfile.encoding=%ZEPPELIN_ENCODING%
+if not defined ZEPPELIN_SPARK_YARN_CLUSTER  (
+    set JAVA_INTP_OPTS=%JAVA_INTP_OPTS% -Dlog4j.configuration=file:/!ZEPPELIN_CONF_DIRW!/log4j.properties -Dlog4j.configurationFile=file:/!ZEPPELIN_CONF_DIRW!/log4j2.properties
+) else (
+    set JAVA_INTP_OPTS=%JAVA_INTP_OPTS% -Dlog4j.configuration=log4j_yarn_cluster.properties
+)
 
 if not defined JAVA_HOME (
     set ZEPPELIN_RUNNER=java
@@ -107,5 +114,6 @@ if not defined ZEPPELIN_IDENT_STRING (
 if not defined ZEPPELIN_INTERPRETER_REMOTE_RUNNER (
     set ZEPPELIN_INTERPRETER_REMOTE_RUNNER=bin\interpreter.cmd
 )
-
+echo Env: (common)
+set
 exit /b
