@@ -31,6 +31,7 @@ if /I "%~1"=="-c" set CALLBACK_HOST=%~2
 if /I "%~1"=="-l" set LOCAL_INTERPRETER_REPO=%~2
 if /I "%~1"=="-i" set INTP_GROUP_ID=%~2
 if /I "%~1"=="-r" set INTP_PORT=%~2
+if /I "%~1"=="-g" set INTERPRETER_SETTING_NAME=%~2
 shift
 goto loop
 :cont
@@ -143,4 +144,4 @@ if defined SPARK_SUBMIT (
 exit /b
 
 :usage
-echo Usage: %~n0 -p ^<port^> -d ^<interpreter dir to load^> -l ^<local interpreter repo dir to load^>
+echo Usage: %~n0 -p ^<port^> -r ^<intp_port^> -d ^<interpreter dir to load^> -l ^<local interpreter repo dir to load^> -g ^<interpreter group name^>
