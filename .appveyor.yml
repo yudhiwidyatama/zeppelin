@@ -26,8 +26,26 @@ build: off
 os:
   - Visual Studio 2015
 
+environment:
+  INTERPRETERS: '!beam,!hbase,!pig,!jdbc,!file,!flink,!ignite,!kylin,!lens,!cassandra,!elasticsearch,!bigquery,!alluxio,!scio,!livy,!groovy,!sap,!java,!geode,!neo4j,!hazelcastjet,!submarine,!sparql,!mongodb'
+  matrix:
+    - BUILD_FLAG: clean package -T C2 -DskipTests -Pweb-angular
+      TEST_FLAG: test -DskipTests -Pweb-angular
+    - CI: true
+      WEB_E2E: true
+      PYTHON: 2
+      SCALA_VER: 2.11
+      SPARK_VER: 2.1.0
+      HADOOP_VER: 2.6
+      PROFILE: -Phadoop2 -Pscala-2.11
+      BUILD_FLAG: install -DskipTests -DskipRat
+      TEST_FLAG: verify -DskipRat
+      MODULES: -pl $(INTERPRETERS) 
+      TEST_MODULES: -pl zeppelin-web
+      TEST_PROJECTS: -Pweb-e2e
 init:
   - git config --global core.autocrlf true
+  - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 
 cache:
   - C:\maven\apache-maven-3.2.5
@@ -40,12 +58,28 @@ install:
   - cmd: SET PATH=%GROOVY_HOME%\bin;%JAVA_HOME%\bin;%M2_HOME%\bin;%PATH%
   - cmd: mvn --version
   - cmd: java -version
-
+  - ps: |     
+      if (Test-Path env:SPARK_VER) {
+        $SPARK_VERSION = $env:SPARK_VER
+        $HADOOP_VERSION = $env:HADOOP_VER
+        $SPARK_ARCHIVE = "spark-$SPARK_VERSION-bin-hadoop$HADOOP_VERSION"
+        (new-object System.Net.WebClient).DownloadFile(
+          $('http://archive.apache.org/dist/spark/spark-' + $SPARK_VERSION + '/' + $SPARK_ARCHIVE + '.tgz'),
+          $($SPARK_ARCHIVE + '.tgz')
+        )
+        $cont=true
+        7z x $($SPARK_ARCHIVE+'.tgz') 
+        7z x $($SPARK_ARCHIVE+'.tar')
+      }
+      
 build_script:
-  - echo "Build"
-  - cmd: mvn clean package -Pbuild-distr
+  - echo "Build  mvn %BUILD_FLAG% %MODULES% %PROFILE% -B"
+  - cmd: mvn %BUILD_FLAG% %MODULES% %PROFILE% -B
   - ps: echo "Size of caches (bytes):"
   - ps: Get-ChildItem -Recurse 'C:\maven\apache-maven-3.2.5' | Measure-Object -Property Length -Sum
   - ps: Get-ChildItem -Recurse 'C:\Users\appveyor\.m2' | Measure-Object -Property Length -Sum
 test_script:
-  - cmd: mvn verify
+  - echo "Test mvn %TEST_FLAG% %TEST_MODULES% %PROFILE% -B %TEST_PROJECTS%"
+  - cmd: mvn %TEST_FLAG% %TEST_MODULES% %PROFILE% -B %TEST_PROJECTS%
+on_finish:
+  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
