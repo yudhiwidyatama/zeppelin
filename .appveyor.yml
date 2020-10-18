@@ -29,27 +29,17 @@ os:
 environment:
   INTERPRETERS: '!beam,!hbase,!pig,!jdbc,!file,!flink,!ignite,!kylin,!lens,!cassandra,!elasticsearch,!bigquery,!alluxio,!scio,!livy,!groovy,!sap,!java,!geode,!neo4j,!hazelcastjet,!submarine,!sparql,!mongodb'
   matrix:
-    - BUILD_FLAG: clean package -T C2 -DskipTests -Pweb-angular
-      TEST_FLAG: test -DskipTests -Pweb-angular
-    - CI: true
-      WEB_E2E: true
-      PYTHON: 2
-      SCALA_VER: 2.11
-      SPARK_VER: 2.1.0
-      HADOOP_VER: 2.6
-      PROFILE: -Phadoop2 -Pscala-2.11
-      BUILD_FLAG: install -DskipTests -DskipRat
-      TEST_FLAG: verify -DskipRat
-      MODULES: -pl $(INTERPRETERS) 
-      TEST_MODULES: -pl zeppelin-web
-      TEST_PROJECTS: -Pweb-e2e
+    - BUILD_FLAG: clean package -Pbuild-distr -DskipTests
+      TEST_FLAG: package -Pbuild-distr -DskipTests
+
 init:
   - git config --global core.autocrlf true
-  - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 
 cache:
   - C:\maven\apache-maven-3.2.5
   - C:\Users\appveyor\.m2
+  - zeppelin-web\node
+  - zeppelin-web\node_modules
 
 install:
   - echo "Install"
@@ -78,8 +68,9 @@ build_script:
   - ps: echo "Size of caches (bytes):"
   - ps: Get-ChildItem -Recurse 'C:\maven\apache-maven-3.2.5' | Measure-Object -Property Length -Sum
   - ps: Get-ChildItem -Recurse 'C:\Users\appveyor\.m2' | Measure-Object -Property Length -Sum
+  - ps: Get-ChildItem -Recurse 'zeppelin-web\node' | Measure-Object -Property Length -Sum
+  - ps: Get-ChildItem -Recurse 'zeppelin-web\node_modules' | Measure-Object -Property Length -Sum
 test_script:
   - echo "Test mvn %TEST_FLAG% %TEST_MODULES% %PROFILE% -B %TEST_PROJECTS%"
   - cmd: mvn %TEST_FLAG% %TEST_MODULES% %PROFILE% -B %TEST_PROJECTS%
-on_finish:
-  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+  
