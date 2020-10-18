@@ -26,8 +26,15 @@ build: off
 os:
   - Visual Studio 2015
 
+init:
+  - git config --global core.autocrlf true
 install:
   - echo "Install"
+  - cmd: SET M2_HOME=C:\maven\apache-maven-3.2.5
+  - cmd: SET GROOVY_HOME=C:\groovy\groovy-2.4.8
+  - cmd: SET PATH=%GROOVY_HOME%\bin;%JAVA_HOME%\bin;%M2_HOME%\bin;%PATH%
+  - cmd: mvn --version
+  - cmd: java -version
 
 build_script:
   - echo "Build"
