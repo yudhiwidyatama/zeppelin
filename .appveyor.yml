@@ -38,6 +38,8 @@ init:
 
 cache:
   - C:\Users\appveyor\.m2\repository\org\apache
+  - C:\Users\appveyor\.m2\repository\org\codehaus
+  - C:\Users\appveyor\.m2\repository\com
   - zeppelin-common\target
   - zeppelin-distribution\target
   - zeppelin-interpreter\target
