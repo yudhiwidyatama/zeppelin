@@ -36,6 +36,7 @@
   <properties>
     <web.e2e.disabled>true</web.e2e.disabled>
     <web.e2e.win.disabled>true</web.e2e.win.disabled>
+    <web.e2e.lin.disabled>true</web.e2e.lin.disabled>
     <web.e2e.enabled>false</web.e2e.enabled>
     <zeppelin.daemon.package.base>../bin</zeppelin.daemon.package.base>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -151,7 +152,7 @@
             <id>start-zeppelin</id>
             <phase>pre-integration-test</phase>
             <configuration>
-              <skip>${web.e2e.disabled}</skip>
+              <skip>${web.e2e.lin.disabled}</skip>
               <target unless="skipTests">
                 <exec executable="./zeppelin-daemon.sh" dir="${zeppelin.daemon.package.base}" spawn="false">
                   <arg value="start" />
@@ -183,7 +184,7 @@
             <id>stop-zeppelin</id>
             <phase>post-integration-test</phase>
             <configuration>
-              <skip>${web.e2e.disabled}</skip>
+              <skip>${web.e2e.lin.disabled}</skip>
               <target unless="skipTests">
                 <exec executable="./zeppelin-daemon.sh" dir="${zeppelin.daemon.package.base}" spawn="false">
                   <arg value="stop" />
@@ -268,14 +269,16 @@
         <web.e2e.disabled>false</web.e2e.disabled>
         <web.e2e.enabled>true</web.e2e.enabled>
         <web.e2e.win.disabled>true</web.e2e.win.disabled>
+        <web.e2e.lin.disabled>false</web.e2e.lin.disabled>
       </properties>
     </profile>
     <profile>
       <id>web-e2e-win</id>
       <properties>
-        <web.e2e.disabled>true</web.e2e.disabled>
+        <web.e2e.disabled>false</web.e2e.disabled>
         <web.e2e.enabled>true</web.e2e.enabled>
         <web.e2e.win.disabled>false</web.e2e.win.disabled>
+        <web.e2e.lin.disabled>true</web.e2e.lin.disabled>
       </properties>
     </profile>
   </profiles>
