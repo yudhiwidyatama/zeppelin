@@ -63,6 +63,7 @@ install:
 build_script:
   - echo "Build  mvn %BUILD_FLAG% %MODULES% %PROFILE% -B"
   - cmd: mvn %BUILD_FLAG% %MODULES% %PROFILE% -B
+  - echo "script-build-finished MARK"
   - ps: echo "Size of caches (bytes):"
   - ps: Get-ChildItem -Recurse 'C:\Users\appveyor\.m2\repository\org\apache' | Measure-Object -Property Length -Sum
 test_script:
