@@ -38,12 +38,25 @@ init:
 
 cache:
   - C:\Users\appveyor\.m2\repository\org\apache
+  - zeppelin-common\target
+  - zeppelin-distribution\target
+  - zeppelin-interpreter\target
+  - zeppelin-interpreter-shaded\target
+  - zeppelin-interpreter-parent\target
+  - zeppelin-interpreter-integration\target
+  - zeppelin-jupyter\target
+  - zeppelin-jupyter-interpreter\target
+  - zeppelin-jupyter-interpreter-shaded\target
+  - zeppelin-web\target
+  - zeppelin-web-angular\target
   - zeppelin-web\node
   - zeppelin-web\node_modules
 
 install:
   - echo "Install"
   - cmd: echo %M2_HOME%
+  - echo "%~nx0"
+  - echo %CD%
   - cmd: mvn --version
   - cmd: java -version
   - ps: |     
