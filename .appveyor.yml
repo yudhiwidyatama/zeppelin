@@ -32,7 +32,7 @@ environment:
     - BUILD_FLAG: clean package -Pbuild-distr -DskipTests -DskipRat -Phadoop2 -Pscala-2.11
       TEST_FLAG: package install -Pbuild-distr -Phadoop2 -Pscala-2.11 -DskipTests -DskipRat
     - BUILD_FLAG: install -DskipTests -DskipRat -pl !beam,!hbase,!pig,!jdbc,!file,!flink,!ignite,!kylin,!lens,!cassandra,!elasticsearch,!bigquery,!alluxio,!scio,!livy,!groovy,!sap,!java,!geode,!neo4j,!hazelcastjet,!submarine,!sparql,!mongodb -Phadoop2 -Pscala-2.11
-      TEST_FLAG: verify -DskipRat -pl zeppelin-web -Phadoop2 -Pscala-2.11 -Pweb-e2e
+      TEST_FLAG: verify -DskipRat -pl zeppelin-web -Phadoop2 -Pscala-2.11 -Pweb-e2e-win
 
 init:
   - git config --global core.autocrlf true
