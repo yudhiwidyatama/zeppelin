@@ -29,8 +29,8 @@ os:
 environment:
   INTERPRETERS: '!beam,!hbase,!pig,!jdbc,!file,!flink,!ignite,!kylin,!lens,!cassandra,!elasticsearch,!bigquery,!alluxio,!scio,!livy,!groovy,!sap,!java,!geode,!neo4j,!hazelcastjet,!submarine,!sparql,!mongodb'
   matrix:
-    - BUILD_FLAG: package -Pbuild-distr -DskipTests
-      TEST_FLAG: package -Pbuild-distr -DskipTests
+    - BUILD_FLAG: -DskipTests -DskipRat -pl !beam,!hbase,!pig,!jdbc,!file,!flink,!ignite,!kylin,!lens,!cassandra,!elasticsearch,!bigquery,!alluxio,!scio,!livy,!groovy,!sap,!java,!geode,!neo4j,!hazelcastjet,!submarine,!sparql,!mongodb -Phadoop2 -Pscala-2.11
+      TEST_FLAG: verify -DskipRat -pl zeppelin-web -Phadoop2 -Pscala-2.11 -Pweb-e2e
 
 init:
   - git config --global core.autocrlf true
