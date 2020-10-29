@@ -27,5 +27,5 @@ exit /b
 start "zeppelind"  %~dp0\zeppelin.cmd
 exit /b
 :zstop
-taskkill /T /F /fi "WindowTitle eq zeppelind*"
+taskkill /T /fi "WindowTitle eq zeppelind*"
 exit /b
