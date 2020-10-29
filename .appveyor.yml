@@ -29,8 +29,6 @@ os:
 environment:
   INTERPRETERS: '!beam,!hbase,!pig,!jdbc,!file,!flink,!ignite,!kylin,!lens,!cassandra,!elasticsearch,!bigquery,!alluxio,!scio,!livy,!groovy,!sap,!java,!geode,!neo4j,!hazelcastjet,!submarine,!sparql,!mongodb'
   matrix:
-    - BUILD_FLAG: clean package -Pbuild-distr -DskipTests -DskipRat -Phadoop2 -Pscala-2.11
-      TEST_FLAG: package install -Pbuild-distr -Phadoop2 -Pscala-2.11 -DskipTests -DskipRat
     - BUILD_FLAG: install -DskipTests -DskipRat -pl !beam,!hbase,!pig,!jdbc,!file,!flink,!ignite,!kylin,!lens,!cassandra,!elasticsearch,!bigquery,!alluxio,!scio,!livy,!groovy,!sap,!java,!geode,!neo4j,!hazelcastjet,!submarine,!sparql,!mongodb -Phadoop2 -Pscala-2.11
       TEST_FLAG: verify -DskipRat -pl zeppelin-web -Phadoop2 -Pscala-2.11 -Pweb-e2e-win
 
@@ -86,4 +84,5 @@ build_script:
 test_script:
   - echo "Test mvn %TEST_FLAG% %TEST_MODULES% %PROFILE% -B %TEST_PROJECTS%"
   - cmd: mvn %TEST_FLAG% %TEST_MODULES% %PROFILE% -B %TEST_PROJECTS%
-  
+on_finish:
+  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))  
