@@ -66,6 +66,7 @@ public abstract class AbstractInterpreterTest {
   @After
   public void tearDown() throws Exception {
     interpreterSettingManager.close();
+    Thread.sleep(10000);
     FileUtils.deleteDirectory(interpreterDir);
     FileUtils.deleteDirectory(confDir);
     FileUtils.deleteDirectory(notebookDir);
