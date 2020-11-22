@@ -413,8 +413,13 @@ public class RemoteInterpreterTest extends AbstractInterpreterTest {
   @Test
   public void testFailToLaunchInterpreterProcess_ErrorInRunner() {
     try {
+      String pathToInvalidInterpreter =  zeppelinHome.getAbsolutePath() + "/zeppelin-zengine/src/test/resources/bin/interpreter_invalid.sh";
+      if (conf.isWindowsPath(zeppelinHome.getAbsolutePath()))
+        pathToInvalidInterpreter =  zeppelinHome.getAbsolutePath() + "/zeppelin-zengine/src/test/resources/bin/interpreter_invalid.cmd";
+
+      
       System.setProperty(ZeppelinConfiguration.ConfVars.ZEPPELIN_INTERPRETER_REMOTE_RUNNER.getVarName(),
-               zeppelinHome.getAbsolutePath() + "/zeppelin-zengine/src/test/resources/bin/interpreter_invalid.sh");
+               pathToInvalidInterpreter);
       final Interpreter interpreter1 = interpreterSetting.getInterpreter("user1", "note1", "sleep");
       final InterpreterContext context1 = createDummyInterpreterContext();
       // run this dummy interpret method first to launch the RemoteInterpreterProcess to avoid the
@@ -433,8 +438,12 @@ public class RemoteInterpreterTest extends AbstractInterpreterTest {
   @Test
   public void testFailToLaunchInterpreterProcess_Timeout() {
     try {
+      String pathToTimeoutInterpreter = zeppelinHome.getAbsolutePath() + "/zeppelin-zengine/src/test/resources/bin/interpreter_timeout.sh";
+      if (conf.isWindowsPath(zeppelinHome.getAbsolutePath()))
+        pathToTimeoutInterpreter =  zeppelinHome.getAbsolutePath() + "/zeppelin-zengine/src/test/resources/bin/interpreter_timeout.cmd";
+
       System.setProperty(ZeppelinConfiguration.ConfVars.ZEPPELIN_INTERPRETER_REMOTE_RUNNER.getVarName(),
-              zeppelinHome.getAbsolutePath() + "/zeppelin-zengine/src/test/resources/bin/interpreter_timeout.sh");
+              pathToTimeoutInterpreter);
       System.setProperty(ZeppelinConfiguration.ConfVars.ZEPPELIN_INTERPRETER_CONNECT_TIMEOUT.getVarName(), "10000");
       final Interpreter interpreter1 = interpreterSetting.getInterpreter("user1", "note1", "sleep");
       final InterpreterContext context1 = createDummyInterpreterContext();
