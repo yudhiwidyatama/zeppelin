@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.IOException;
 
 import static org.mockito.Mockito.mock;
 
@@ -66,8 +67,12 @@ public abstract class AbstractInterpreterTest {
   @After
   public void tearDown() throws Exception {
     interpreterSettingManager.close();
-    Thread.sleep(10000);
-    FileUtils.deleteDirectory(interpreterDir);
+    try {
+      FileUtils.deleteDirectory(interpreterDir);
+    } catch (IOException iox) {
+      // only in linux you could delete files that are still has open handles
+    }
+    
     FileUtils.deleteDirectory(confDir);
     FileUtils.deleteDirectory(notebookDir);
   }
