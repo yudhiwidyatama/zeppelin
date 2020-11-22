@@ -37,6 +37,8 @@ import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 
+import org.apache.zeppelin.interpreter.integration.DownloadUtils;
+
 public class FileSystemRecoveryStorageTest extends AbstractInterpreterTest {
 
   private File recoveryDir = null;
@@ -45,6 +47,8 @@ public class FileSystemRecoveryStorageTest extends AbstractInterpreterTest {
   public void setUp() throws Exception {
     System.setProperty(ZeppelinConfiguration.ConfVars.ZEPPELIN_RECOVERY_STORAGE_CLASS.getVarName(),
         FileSystemRecoveryStorage.class.getName());
+    String sparkHome = DownloadUtils.downloadSpark("2.3.2", "2.7");
+    System.setProperty("hadoop.home.dir",sparkHome);
     recoveryDir = Files.createTempDir();
     String recoveryDirURI = recoveryDir.toURI().toString();
     System.setProperty(ZeppelinConfiguration.ConfVars.ZEPPELIN_RECOVERY_DIR.getVarName(), recoveryDirURI);

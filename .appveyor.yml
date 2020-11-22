@@ -36,8 +36,8 @@ environment:
       BUILD_FLAG: clean -DskipTests -DskipRat -pl "!beam,!hbase,!pig,!jdbc,!file,!flink,!ignite,!kylin,!lens,!cassandra,!elasticsearch,!bigquery,!alluxio,!scio,!livy,!groovy,!sap,!java,!geode,!neo4j,!hazelcastjet,!submarine,!sparql,!mongodb" -Phadoop2 -Pscala-2.11
       TEST_FLAG: package -DskipRat -pl zeppelin-web-angular -Pweb-angular -Phadoop2 -Pscala-2.11
     - BUILD_NAME: "Test core modules (zeppelin-interpreter,zeppelin-zengine,zeppelin-server) on hadoop2"
-      BUILD_FLAG: install -Pbuild-distr -DskipRat -DskipTests -pl zeppelin-server,zeppelin-web,spark/spark-dependencies,markdown,angular,shell -am -Phelium-dev -Pexamples -Phadoop2 -B
-      TEST_FLAG: verify -Pusing-packaged-distr -DskipRat -pl zeppelin-server,zeppelin-web,spark/spark-dependencies,markdown,angular,shell -am -Phelium-dev -Pexamples -Phadoop2 -B -Dtests.to.exclude='**/org/apache/zeppelin/spark/*' -DfailIfNoTests=false
+      BUILD_FLAG: install -e -Pbuild-distr -DskipRat -DskipTests -pl zeppelin-server,zeppelin-web,spark/spark-dependencies,markdown,angular,shell -am -Phelium-dev -Pexamples -Phadoop2 -B
+      TEST_FLAG: verify -e -Pusing-packaged-distr -DskipRat -pl zeppelin-server,zeppelin-web,spark/spark-dependencies,markdown,angular,shell -am -Phelium-dev -Pexamples -Phadoop2 -B -Dtests.to.exclude='**/org/apache/zeppelin/spark/*' -DfailIfNoTests=false
       SPARK_PRINT_LAUNCH_COMMAND: true
       SPARK_VER: 2.3.2
       HADOOP_VER: 2.7
@@ -92,6 +92,12 @@ install:
         $cont=true
         7z x $($SPARK_ABSPATH1) -oC:\Users\appveyor\.cache\spark\
         7z x $($SPARK_ABSPATH2) -oC:\Users\appveyor\.cache\spark\
+        $WINUTILS_DL_URL = "https://github.com/steveloughran/winutils/raw/master/hadoop-2.7.1/bin/winutils.exe"
+        $WINUTILS_TARGET = $("C:\Users\appveyor\.cache\spark\" + $SPARK_ARCHIVE + "\bin\winutils.exe")
+        (new-object System.Net.WebClient).DownloadFile(
+          $WINUTILS_DL_URL,
+          $WINUTILS_TARGET
+        )
       }
       
 build_script:
