@@ -35,6 +35,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class VFSNotebookRepoTest {
 
@@ -110,6 +111,11 @@ public class VFSNotebookRepoTest {
     assertEquals(1, repoSettings.size());
     NotebookRepoSettingsInfo settingInfo = repoSettings.get(0);
     assertEquals("Notebook Path", settingInfo.name);
+    if (zConf.isWindowsPath(notebookDir.getAbsolutePath()))
+    {
+      String targetMatch = settingInfo.selected.replace('/','\\');
+      assertTrue(notebookDir.getAbsolutePath().endsWith(targetMatch));
+    } else
     assertEquals(notebookDir.getAbsolutePath(), settingInfo.selected);
 
     createNewNote("{}", "id2", "my_project/name2");
