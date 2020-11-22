@@ -46,7 +46,8 @@ public class FileSystemRecoveryStorageTest extends AbstractInterpreterTest {
     System.setProperty(ZeppelinConfiguration.ConfVars.ZEPPELIN_RECOVERY_STORAGE_CLASS.getVarName(),
         FileSystemRecoveryStorage.class.getName());
     recoveryDir = Files.createTempDir();
-    System.setProperty(ZeppelinConfiguration.ConfVars.ZEPPELIN_RECOVERY_DIR.getVarName(), recoveryDir.getAbsolutePath());
+    String recoveryDirURI = recoveryDir.toURI().toString();
+    System.setProperty(ZeppelinConfiguration.ConfVars.ZEPPELIN_RECOVERY_DIR.getVarName(), recoveryDirURI);
     super.setUp();
   }
 
