@@ -67,7 +67,9 @@ public class VFSNotebookRepo implements NotebookRepo {
     URI filesystemRoot = null;
     try {
       LOGGER.info("Using notebookDir: {}", notebookDirPath);
-      if (conf.isWindowsPath(notebookDirPath)) {
+      boolean isNonUriScheme = conf.isWindowsPath(notebookDirPath) ||
+        (!conf.isPathWithScheme(notebookDirPath));
+      if (isNonUriScheme && File.separator.equals("\\")) {
         filesystemRoot = new File(notebookDirPath).toURI();
       } else {
         filesystemRoot = new URI(notebookDirPath);
