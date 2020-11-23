@@ -101,10 +101,11 @@ install:
         )
       }
       if (Test-Path env:PYTHON_APPVEYOR) {
-        pip install jupyter-client
-        pip install grpcio
-        pip install protobuf
-        pip install ipykernel
+        python -W ignore::DeprecationWarning -m pip install --upgrade pip
+        pip install --no-python-version-warning jupyter-client
+        pip install --no-python-version-warning grpcio
+        pip install --no-python-version-warning protobuf
+        pip install --no-python-version-warning ipykernel
       }
       
 build_script:
