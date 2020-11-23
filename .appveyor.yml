@@ -41,6 +41,7 @@ environment:
       SPARK_PRINT_LAUNCH_COMMAND: true
       SPARK_VER: 2.3.2
       HADOOP_VER: 2.7
+      PYTHON_APPVEYOR: 1
      
 init:
   - git config --global core.autocrlf true
@@ -98,6 +99,12 @@ install:
           $WINUTILS_DL_URL,
           $WINUTILS_TARGET
         )
+      }
+      if (Test-Path env:PYTHON_APPVEYOR) {
+        pip install -W ignore::DeprecationWarning jupyter-client
+        pip install -W ignore::DeprecationWarning grpcio
+        pip install -W ignore::DeprecationWarning protobuf
+        pip install -W ignore::DeprecationWarning ipykernel
       }
       
 build_script:
