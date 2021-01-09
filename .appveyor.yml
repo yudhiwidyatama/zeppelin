@@ -37,7 +37,7 @@ environment:
 #      TEST_FLAG: package -DskipRat -pl zeppelin-web-angular -Pweb-angular -Phadoop2 -Pscala-2.11
     - BUILD_NAME: "Test core modules (zeppelin-interpreter,zeppelin-zengine,zeppelin-server) on hadoop2"
       BUILD_FLAG: install -e -Pbuild-distr -DskipRat -DskipTests -pl zeppelin-server,zeppelin-web,spark/spark-dependencies,markdown,angular,shell -am -Phelium-dev -Pexamples -Phadoop2 -B
-      TEST_FLAG: verify -e -Pusing-packaged-distr -DskipRat -pl zeppelin-server,zeppelin-web,spark/spark-dependencies,markdown,angular,shell -am -Phelium-dev -Pexamples -Phadoop2 -B -Dtests.to.exclude='**/org/apache/zeppelin/spark/*,**/org/apache/zeppelin/jupyter/IRKernelTest/*' -DfailIfNoTests=false
+      TEST_FLAG: verify -e -Pusing-packaged-distr -DskipRat -pl zeppelin-server,zeppelin-web,spark/spark-dependencies,markdown,angular,shell -am -Phelium-dev -Pexamples -Phadoop2 -B -Dtests.to.exclude='**/org/apache/zeppelin/spark/*,**/org/apache/zeppelin/jupyter/IRKernelTest.java' -DfailIfNoTests=false
       SPARK_PRINT_LAUNCH_COMMAND: true
       SPARK_VER: 2.3.2
       HADOOP_VER: 2.7
