@@ -1245,7 +1245,7 @@
             </environmentVariables>
             <excludes>
               <exclude>${tests.to.exclude}</exclude>
-              <exclude>${tests.to.exclude2}</exclude>
+              <exclude>**/org/apache/zeppelin/jupyter/IRKernelTest.java</exclude>
             </excludes>
           </configuration>
           <!-- <excludes> <exclude>**/itest/**</exclude> </excludes> <executions>
