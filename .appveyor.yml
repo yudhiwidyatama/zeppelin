@@ -27,6 +27,7 @@ os:
   - Visual Studio 2015
 
 environment:
+  CONDA_INSTALL_LOCN: C:\Miniconda37-x64
   INTERPRETERS: '!beam,!hbase,!pig,!jdbc,!file,!flink,!ignite,!kylin,!lens,!cassandra,!elasticsearch,!bigquery,!alluxio,!scio,!livy,!groovy,!sap,!java,!geode,!neo4j,!hazelcastjet,!submarine,!sparql,!mongodb'
   matrix:
 #    - BUILD_NAME: "Run e2e tests in zeppelin-web"
@@ -37,7 +38,7 @@ environment:
 #      TEST_FLAG: package -DskipRat -pl zeppelin-web-angular -Pweb-angular -Phadoop2 -Pscala-2.11
     - BUILD_NAME: "Test core modules (zeppelin-interpreter,zeppelin-zengine,zeppelin-server) on hadoop2"
       BUILD_FLAG: install -e -Pbuild-distr -DskipRat -DskipTests -pl zeppelin-server,zeppelin-web,spark/spark-dependencies,markdown,angular,shell -am -Phelium-dev -Pexamples -Phadoop2 -B
-      TEST_FLAG: verify -e -Pusing-packaged-distr -DskipRat -pl zeppelin-server,zeppelin-web,spark/spark-dependencies,markdown,angular,shell -am -Phelium-dev -Pexamples -Phadoop2 -B -Dtests.to.exclude='**/org/apache/zeppelin/spark/*' -Dtests.to.exclude2'='**/org/apache/zeppelin/jupyter/IRKernelTest.java' -DfailIfNoTests=false
+      TEST_FLAG: verify -e -Pusing-packaged-distr -DskipRat -pl zeppelin-server,zeppelin-web,spark/spark-dependencies,markdown,angular,shell -am -Phelium-dev -Pexamples -Phadoop2 -B -Dtests.to.exclude='**/org/apache/zeppelin/spark/*,**/org/apache/zeppelin/jupyter/IRKernelTest' -DfailIfNoTests=false
       SPARK_PRINT_LAUNCH_COMMAND: true
       SPARK_VER: 2.3.2
       HADOOP_VER: 2.7
@@ -46,7 +47,7 @@ environment:
 init:
   - git config --global core.autocrlf true
   - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
-
+  - cmd: SET PATH=%CONDA_INSTALL_LOCN%;%CONDA_INSTALL_LOCN%\Scripts;%PATH% 
 cache:
   - C:\Users\appveyor\.m2\repository\org\apache
   - C:\Users\appveyor\.m2\repository\org\codehaus
@@ -102,10 +103,14 @@ install:
       }
       if (Test-Path env:PYTHON_APPVEYOR) {
         python -W ignore::DeprecationWarning -m pip install --upgrade pip
+        pip install -q pycodestyle==2.5.0
+        pip install -q numpy==1.17.3 pandas==0.25.0 scipy==1.3.1 grpcio==1.19.0 bkzep==0.6.1 hvplot==0.5.2 protobuf==3.10.0
         pip install --no-python-version-warning jupyter-client
         pip install --no-python-version-warning grpcio
         pip install --no-python-version-warning protobuf
         pip install --no-python-version-warning ipykernel
+        conda install -y --quiet r-base r-evaluate r-base64enc r-knitr r-ggplot2 r-irkernel r-shiny r-googlevis
+        R -e "IRkernel::installspec()"
       }
       
 build_script:
