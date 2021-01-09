@@ -110,7 +110,7 @@ install:
         pip install --no-python-version-warning protobuf
         pip install --no-python-version-warning ipykernel
         conda install -y --quiet r-base r-evaluate r-base64enc r-knitr r-ggplot2 r-irkernel r-shiny r-googlevis
-        & R.exe -e "IRkernel::installspec()" 2>&1 
+        cmd /c 'R.exe -e "IRkernel::installspec()" 2>&1 '
       }
       
 build_script:
