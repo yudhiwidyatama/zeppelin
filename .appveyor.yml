@@ -104,11 +104,8 @@ install:
       if (Test-Path env:PYTHON_APPVEYOR) {
         python -W ignore::DeprecationWarning -m pip install --upgrade pip
         pip install -q pycodestyle==2.5.0
-        pip install -q numpy==1.17.3 pandas==0.25.0 scipy==1.3.1 grpcio==1.19.0 bkzep==0.6.1 hvplot==0.5.2 protobuf==3.10.0        pip install -q pandasql==0.7.3 ipython==7.8.0 matplotlib==3.0.3 ipykernel==5.1.2 jupyter_client==5.3.4 bokeh==1.3.4 panel==0.6.0 holoviews==1.12.3 pycodestyle==2.5.0
-#        pip install --no-python-version-warning jupyter-client
-#        pip install --no-python-version-warning grpcio
-#        pip install --no-python-version-warning protobuf
-#        pip install --no-python-version-warning ipykernel
+        pip install -q numpy==1.17.3 pandas==0.25.0 scipy==1.3.1 grpcio==1.19.0 bkzep==0.6.1 hvplot==0.5.2 protobuf==3.10.0       
+        pip install -q pandasql==0.7.3 ipython==7.8.0 matplotlib==3.0.3 ipykernel==5.1.2 jupyter_client==5.3.4 bokeh==1.3.4 panel==0.6.0 holoviews==1.12.3 pycodestyle==2.5.0
         conda install -y --quiet r-base r-evaluate r-base64enc r-knitr r-ggplot2 r-irkernel r-shiny r-googlevis
         cmd /c 'R.exe -e "IRkernel::installspec()" 2>&1 '
       }
