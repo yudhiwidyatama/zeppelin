@@ -1245,6 +1245,7 @@
             </environmentVariables>
             <excludes>
               <exclude>${tests.to.exclude}</exclude>
+              <exclude>${tests.to.exclude2}</exclude>
             </excludes>
           </configuration>
           <!-- <excludes> <exclude>**/itest/**</exclude> </excludes> <executions>
@@ -1539,7 +1540,10 @@
         <module>zeppelin-web-angular</module>
       </modules>
     </profile>
+    <profile>
+      <id>windowstest</id>
 
+    </profile>
     <profile>
       <id>vendor-repo</id>
       <repositories>
