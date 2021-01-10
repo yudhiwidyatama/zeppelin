@@ -52,7 +52,30 @@ environment:
       HADOOP_VER: 2.7
       PYTHON_APPVEYOR: 1
       CONDA_INSTALL_LOCN: C:\Miniconda-x64
-     
+    - BUILD_NAME: "Test core modules (zeppelin-interpreter,zeppelin-zengine,zeppelin-server) on hadoop2 python2 32-bit"
+      BUILD_FLAG: install -e -Pbuild-distr -DskipRat -DskipTests -pl zeppelin-server,zeppelin-web,spark/spark-dependencies,markdown,angular,shell -am -Phelium-dev -Pexamples -Phadoop2 -B
+      TEST_FLAG: verify -e -Pusing-packaged-distr -DskipRat -pl zeppelin-server,zeppelin-web,spark/spark-dependencies,markdown,angular,shell -am -Phelium-dev -Pexamples -Phadoop2 -B -Dtests.to.exclude='**/org/apache/zeppelin/spark/*,**/org/apache/zeppelin/jupyter/IRKernelTest' -DfailIfNoTests=false
+      SPARK_PRINT_LAUNCH_COMMAND: true
+      SPARK_VER: 2.3.2
+      HADOOP_VER: 2.7
+      PYTHON_APPVEYOR: 1
+      CONDA_INSTALL_LOCN: C:\Miniconda
+    - BUILD_NAME: "Test core modules (zeppelin-interpreter,zeppelin-zengine,zeppelin-server) on hadoop2 python37 32-bit"
+      BUILD_FLAG: install -e -Pbuild-distr -DskipRat -DskipTests -pl zeppelin-server,zeppelin-web,spark/spark-dependencies,markdown,angular,shell -am -Phelium-dev -Pexamples -Phadoop2 -B
+      TEST_FLAG: verify -e -Pusing-packaged-distr -DskipRat -pl zeppelin-server,zeppelin-web,spark/spark-dependencies,markdown,angular,shell -am -Phelium-dev -Pexamples -Phadoop2 -B -Dtests.to.exclude='**/org/apache/zeppelin/spark/*,**/org/apache/zeppelin/jupyter/IRKernelTest' -DfailIfNoTests=false
+      SPARK_PRINT_LAUNCH_COMMAND: true
+      SPARK_VER: 2.3.2
+      HADOOP_VER: 2.7
+      PYTHON_APPVEYOR: 1
+      CONDA_INSTALL_LOCN: C:\Miniconda37
+    - BUILD_NAME: "Test core modules (zeppelin-interpreter,zeppelin-zengine,zeppelin-server) on hadoop2 python38 32-bit"
+      BUILD_FLAG: install -e -Pbuild-distr -DskipRat -DskipTests -pl zeppelin-server,zeppelin-web,spark/spark-dependencies,markdown,angular,shell -am -Phelium-dev -Pexamples -Phadoop2 -B
+      TEST_FLAG: verify -e -Pusing-packaged-distr -DskipRat -pl zeppelin-server,zeppelin-web,spark/spark-dependencies,markdown,angular,shell -am -Phelium-dev -Pexamples -Phadoop2 -B -Dtests.to.exclude='**/org/apache/zeppelin/spark/*,**/org/apache/zeppelin/jupyter/IRKernelTest' -DfailIfNoTests=false
+      SPARK_PRINT_LAUNCH_COMMAND: true
+      SPARK_VER: 2.3.2
+      HADOOP_VER: 2.7
+      PYTHON_APPVEYOR: 1
+      CONDA_INSTALL_LOCN: C:\Miniconda38  
 init:
   - git config --global core.autocrlf true
   - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
