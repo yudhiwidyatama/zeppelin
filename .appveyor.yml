@@ -15,7 +15,12 @@
 # KIND, either express or implied. See the License for the
 # specific language governing permissions and limitations
 # under the License.
-#
+#init
+#  - cmd: SET PATH=%CONDA_INSTALL_LOCN%;%CONDA_INSTALL_LOCN%\Scripts;%PATH% 
+
+#        conda install -y --quiet r-base r-evaluate r-base64enc r-knitr r-ggplot2 r-irkernel r-shiny r-googlevis
+#        cmd /c 'R.exe -e "IRkernel::installspec()" 2>&1 '
+
 
 version: '1.0.0-dev.{build}'
 
@@ -38,7 +43,7 @@ environment:
 #      TEST_FLAG: package -DskipRat -pl zeppelin-web-angular -Pweb-angular -Phadoop2 -Pscala-2.11
     - BUILD_NAME: "Test core modules (zeppelin-interpreter,zeppelin-zengine,zeppelin-server) on hadoop2"
       BUILD_FLAG: install -e -Pbuild-distr -DskipRat -DskipTests -pl zeppelin-server,zeppelin-web,spark/spark-dependencies,markdown,angular,shell -am -Phelium-dev -Pexamples -Phadoop2 -B
-      TEST_FLAG: verify -e -Pusing-packaged-distr -DskipRat -pl zeppelin-server,zeppelin-web,spark/spark-dependencies,markdown,angular,shell -am -Phelium-dev -Pexamples -Phadoop2 -B -Dtests.to.exclude='**/org/apache/zeppelin/spark/*,**/org/apache/zeppelin/jupyter/IRKernelTest' -DfailIfNoTests=false
+      TEST_FLAG: verify -e -Pusing-packaged-distr -Pwinexcludes -DskipRat -pl zeppelin-server,zeppelin-web,spark/spark-dependencies,markdown,angular,shell -am -Phelium-dev -Pexamples -Phadoop2 -B -Dtests.to.exclude='**/org/apache/zeppelin/spark/*,**/org/apache/zeppelin/jupyter/IRKernelTest' -DfailIfNoTests=false
       SPARK_PRINT_LAUNCH_COMMAND: true
       SPARK_VER: 2.3.2
       HADOOP_VER: 2.7
@@ -46,7 +51,7 @@ environment:
       CONDA_INSTALL_LOCN: C:\Miniconda37-x64
     - BUILD_NAME: "Test core modules (zeppelin-interpreter,zeppelin-zengine,zeppelin-server) on hadoop2 python2"
       BUILD_FLAG: install -e -Pbuild-distr -DskipRat -DskipTests -pl zeppelin-server,zeppelin-web,spark/spark-dependencies,markdown,angular,shell -am -Phelium-dev -Pexamples -Phadoop2 -B
-      TEST_FLAG: verify -e -Pusing-packaged-distr -DskipRat -pl zeppelin-server,zeppelin-web,spark/spark-dependencies,markdown,angular,shell -am -Phelium-dev -Pexamples -Phadoop2 -B -Dtests.to.exclude='**/org/apache/zeppelin/spark/*,**/org/apache/zeppelin/jupyter/IRKernelTest' -DfailIfNoTests=false
+      TEST_FLAG: verify -e -Pusing-packaged-distr -Pwinexcludes -DskipRat -pl zeppelin-server,zeppelin-web,spark/spark-dependencies,markdown,angular,shell -am -Phelium-dev -Pexamples -Phadoop2 -B -Dtests.to.exclude='**/org/apache/zeppelin/spark/*,**/org/apache/zeppelin/jupyter/IRKernelTest' -DfailIfNoTests=false
       SPARK_PRINT_LAUNCH_COMMAND: true
       SPARK_VER: 2.3.2
       HADOOP_VER: 2.7
@@ -54,7 +59,7 @@ environment:
       CONDA_INSTALL_LOCN: C:\Miniconda-x64
     - BUILD_NAME: "Test core modules (zeppelin-interpreter,zeppelin-zengine,zeppelin-server) on hadoop2 python2 32-bit"
       BUILD_FLAG: install -e -Pbuild-distr -DskipRat -DskipTests -pl zeppelin-server,zeppelin-web,spark/spark-dependencies,markdown,angular,shell -am -Phelium-dev -Pexamples -Phadoop2 -B
-      TEST_FLAG: verify -e -Pusing-packaged-distr -DskipRat -pl zeppelin-server,zeppelin-web,spark/spark-dependencies,markdown,angular,shell -am -Phelium-dev -Pexamples -Phadoop2 -B -Dtests.to.exclude='**/org/apache/zeppelin/spark/*,**/org/apache/zeppelin/jupyter/IRKernelTest' -DfailIfNoTests=false
+      TEST_FLAG: verify -e -Pusing-packaged-distr -Pwinexcludes -DskipRat -pl zeppelin-server,zeppelin-web,spark/spark-dependencies,markdown,angular,shell -am -Phelium-dev -Pexamples -Phadoop2 -B -Dtests.to.exclude='**/org/apache/zeppelin/spark/*,**/org/apache/zeppelin/jupyter/IRKernelTest' -DfailIfNoTests=false
       SPARK_PRINT_LAUNCH_COMMAND: true
       SPARK_VER: 2.3.2
       HADOOP_VER: 2.7
@@ -62,7 +67,7 @@ environment:
       CONDA_INSTALL_LOCN: C:\Miniconda
     - BUILD_NAME: "Test core modules (zeppelin-interpreter,zeppelin-zengine,zeppelin-server) on hadoop2 python37 32-bit"
       BUILD_FLAG: install -e -Pbuild-distr -DskipRat -DskipTests -pl zeppelin-server,zeppelin-web,spark/spark-dependencies,markdown,angular,shell -am -Phelium-dev -Pexamples -Phadoop2 -B
-      TEST_FLAG: verify -e -Pusing-packaged-distr -DskipRat -pl zeppelin-server,zeppelin-web,spark/spark-dependencies,markdown,angular,shell -am -Phelium-dev -Pexamples -Phadoop2 -B -Dtests.to.exclude='**/org/apache/zeppelin/spark/*,**/org/apache/zeppelin/jupyter/IRKernelTest' -DfailIfNoTests=false
+      TEST_FLAG: verify -e -Pusing-packaged-distr -Pwinexcludes -DskipRat -pl zeppelin-server,zeppelin-web,spark/spark-dependencies,markdown,angular,shell -am -Phelium-dev -Pexamples -Phadoop2 -B -Dtests.to.exclude='**/org/apache/zeppelin/spark/*,**/org/apache/zeppelin/jupyter/IRKernelTest' -DfailIfNoTests=false
       SPARK_PRINT_LAUNCH_COMMAND: true
       SPARK_VER: 2.3.2
       HADOOP_VER: 2.7
@@ -70,7 +75,7 @@ environment:
       CONDA_INSTALL_LOCN: C:\Miniconda37
     - BUILD_NAME: "Test core modules (zeppelin-interpreter,zeppelin-zengine,zeppelin-server) on hadoop2 python38 32-bit"
       BUILD_FLAG: install -e -Pbuild-distr -DskipRat -DskipTests -pl zeppelin-server,zeppelin-web,spark/spark-dependencies,markdown,angular,shell -am -Phelium-dev -Pexamples -Phadoop2 -B
-      TEST_FLAG: verify -e -Pusing-packaged-distr -DskipRat -pl zeppelin-server,zeppelin-web,spark/spark-dependencies,markdown,angular,shell -am -Phelium-dev -Pexamples -Phadoop2 -B -Dtests.to.exclude='**/org/apache/zeppelin/spark/*,**/org/apache/zeppelin/jupyter/IRKernelTest' -DfailIfNoTests=false
+      TEST_FLAG: verify -e -Pusing-packaged-distr -Pwinexcludes -DskipRat -pl zeppelin-server,zeppelin-web,spark/spark-dependencies,markdown,angular,shell -am -Phelium-dev -Pexamples -Phadoop2 -B -Dtests.to.exclude='**/org/apache/zeppelin/spark/*,**/org/apache/zeppelin/jupyter/IRKernelTest' -DfailIfNoTests=false
       SPARK_PRINT_LAUNCH_COMMAND: true
       SPARK_VER: 2.3.2
       HADOOP_VER: 2.7
@@ -79,7 +84,6 @@ environment:
 init:
   - git config --global core.autocrlf true
   - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
-  - cmd: SET PATH=%CONDA_INSTALL_LOCN%;%CONDA_INSTALL_LOCN%\Scripts;%PATH% 
 cache:
   - C:\Users\appveyor\.m2\repository\org\apache
   - C:\Users\appveyor\.m2\repository\org\codehaus
@@ -138,8 +142,6 @@ install:
         pip install pycodestyle
         pip install numpy pandas scipy grpcio bkzep hvplot protobuf       
         pip install pandasql ipython matplotlib ipykernel jupyter_client bokeh panel holoviews
-        conda install -y --quiet r-base r-evaluate r-base64enc r-knitr r-ggplot2 r-irkernel r-shiny r-googlevis
-        cmd /c 'R.exe -e "IRkernel::installspec()" 2>&1 '
       }
       
 build_script:
