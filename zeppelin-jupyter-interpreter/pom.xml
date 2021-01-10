@@ -163,7 +163,6 @@
         <configuration combine.children="append">
             <excludes>
               <exclude>${tests.to.exclude}</exclude>
-              <exclude>**/org/apache/zeppelin/jupyter/IRKernelTest.java</exclude>
             </excludes>
         </configuration>
       </plugin>
@@ -206,5 +205,22 @@
       </plugin>
     </plugins>
   </build>
-
+  <profiles>
+    <profile>
+      <id>winexcludes</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration combine.children="append">
+              <excludes>
+               <exclude>**/org/apache/zeppelin/jupyter/IRKernelTest.java</exclude>
+              </excludes>
+            </configuration>
+         </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>
