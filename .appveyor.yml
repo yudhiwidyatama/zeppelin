@@ -139,9 +139,9 @@ install:
       }
       if (Test-Path env:PYTHON_APPVEYOR) {
         python -W ignore::DeprecationWarning -m pip install --upgrade pip
-        pip install --no-python-version-warning pycodestyle
-        pip install --no-python-version-warning numpy pandas scipy grpcio bkzep hvplot protobuf       
-        pip install --no-python-version-warning pandasql ipython matplotlib ipykernel jupyter_client bokeh panel holoviews
+        pip install --no-python-version-warning -q psutil        
+        pip install --no-python-version-warning -q numpy==1.14.5 pandas==0.21.1 matplotlib==2.1.1 scipy==1.2.1 grpcio==1.19.0 bkzep==0.6.1 hvplot==0.5.2 protobuf==3.7.0 pandasql==0.7.3 ipython==5.8.0 ipykernel==4.10.0 bokeh==1.3.4 panel==0.6.0 holoviews==1.12.3
+        
       }
       
 build_script:
