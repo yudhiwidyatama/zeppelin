@@ -162,7 +162,8 @@ public class PythonInterpreterTest extends BasePythonInterpreterTest {
       fail("Should fail to open PythonInterpreter");
     } catch (InterpreterException e) {
       String stacktrace = ExceptionUtils.getStackTrace(e);
-      assertTrue(stacktrace, stacktrace.contains("No such file or directory"));
+      assertTrue(stacktrace, stacktrace.contains("No such file or directory")
+              || stacktrace.contains("cannot find the file specified"));
     }
   }
 }

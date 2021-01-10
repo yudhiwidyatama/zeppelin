@@ -129,8 +129,9 @@ public class IPythonInterpreterTest extends BasePythonInterpreterTest {
         + "len(pidToKill)";
     String codeKillKernel = "from os import kill\n"
         + "import signal\n"
+        + "sig = getattr(signal, 'SIGKILL', signal.SIGTERM)\n"
         + "for pid in pidToKill:\n"
-        + "    kill(pid, signal.SIGKILL)";
+        + "    kill(pid, sig)";
     InterpreterContext context = getInterpreterContext();
     InterpreterResult result = interpreter.interpret(codeDep, context);
     assertEquals(InterpreterResult.Code.SUCCESS, result.code());
@@ -461,7 +462,8 @@ public class IPythonInterpreterTest extends BasePythonInterpreterTest {
       fail("Should not be able to start IPythonInterpreter");
     } catch (InterpreterException e) {
       String exceptionMsg = ExceptionUtils.getStackTrace(e);
-      assertTrue(exceptionMsg, exceptionMsg.contains("No such file or directory"));
+      assertTrue(exceptionMsg, exceptionMsg.contains("No such file or directory")
+              || exceptionMsg.contains("cannot find the file specified"));
     }
   }
 
