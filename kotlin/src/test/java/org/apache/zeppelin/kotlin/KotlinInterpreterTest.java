@@ -123,7 +123,10 @@ public class KotlinInterpreterTest {
   @Test
   public void testOutput() throws Exception {
     testCodeForResult("println(\"Hello Kotlin\")", "");
-    assertEquals("Hello Kotlin\n", output);
+    if (System.lineSeparator().equals("\r\n"))
+      assertEquals("Hello Kotlin\r\n", output);
+    else
+      assertEquals("Hello Kotlin\n", output);
   }
 
   @Test
@@ -288,7 +291,10 @@ public class KotlinInterpreterTest {
     interpreter.interpret("val s = \"abc\"", context);
     interpreter.interpret("fun f(l: List<String>) { }", context);
     interpreter.interpret("kc.showFunctions()", context);
-    assertEquals("fun f(kotlin.collections.List<kotlin.String>): kotlin.Unit\n", output);
+    if (System.lineSeparator().equals("\r\n"))
+      assertEquals("fun f(kotlin.collections.List<kotlin.String>): kotlin.Unit\r\n", output);
+    else
+      assertEquals("fun f(kotlin.collections.List<kotlin.String>): kotlin.Unit\n", output);
     output = "";
     interpreter.interpret("kc.showVars()", context);
     System.out.println(output);
