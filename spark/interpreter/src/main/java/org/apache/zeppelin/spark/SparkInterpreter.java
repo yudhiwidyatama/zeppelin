@@ -33,6 +33,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.lang.reflect.Constructor;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
@@ -41,7 +42,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.atomic.AtomicInteger;
-
 /**
  * SparkInterpreter of Java implementation. It delegates to different scala version AbstractSparkScalaInterpreter.
  *
@@ -137,8 +137,8 @@ public class SparkInterpreter extends AbstractInterpreter {
    */
   private AbstractSparkScalaInterpreter loadSparkScalaInterpreter(SparkConf conf) throws Exception {
     String scalaVersion = extractScalaVersion();
-    ClassLoader scalaInterpreterClassLoader = Thread.currentThread().getContextClassLoader();
-
+    // ClassLoader scalaInterpreterClassLoader = Thread.currentThread().getContextClassLoader();
+    ClassLoader scalaInterpreterClassLoader = getClass().getClassLoader();
     String zeppelinHome = System.getenv("ZEPPELIN_HOME");
     if (zeppelinHome != null) {
       // ZEPPELIN_HOME is null in yarn-cluster mode, load it directly via current ClassLoader.
@@ -157,9 +157,12 @@ public class SparkInterpreter extends AbstractInterpreter {
 
     String innerIntpClassName = innerInterpreterClassMap.get(scalaVersion);
     Class clazz = scalaInterpreterClassLoader.loadClass(innerIntpClassName);
+    Constructor constructor = clazz.getConstructor(SparkConf.class, List.class, Properties.class, InterpreterGroup.class, URLClassLoader.class);
+    List<String> dependencyFiles = getDependencyFiles();
+    Properties properties = getProperties();
+    InterpreterGroup interpreterGroup = getInterpreterGroup();
     return (AbstractSparkScalaInterpreter)
-            clazz.getConstructor(SparkConf.class, List.class, Properties.class, InterpreterGroup.class, URLClassLoader.class)
-                    .newInstance(conf, getDependencyFiles(), getProperties(), getInterpreterGroup(), scalaInterpreterClassLoader);
+            constructor.newInstance(conf, dependencyFiles, properties, interpreterGroup, scalaInterpreterClassLoader);
   }
 
   @Override
