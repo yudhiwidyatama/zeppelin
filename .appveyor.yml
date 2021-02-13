@@ -38,6 +38,7 @@ environment:
     - BUILD_NAME: "Run e2e tests in zeppelin-web"
       BUILD_FLAG: install -DskipTests -DskipRat -pl !beam,!hbase,!pig,!jdbc,!file,!flink,!ignite,!kylin,!lens,!cassandra,!elasticsearch,!bigquery,!alluxio,!scio,!livy,!groovy,!sap,!java,!geode,!neo4j,!hazelcastjet,!submarine,!sparql,!mongodb -Phadoop2 -Pscala-2.11
       TEST_FLAG: verify -DskipRat -pl zeppelin-web -Phadoop2 -Pscala-2.11 -Pweb-e2e-win
+      CONDA_INSTALL_LOCN: C:\Miniconda37-x64
 #    - BUILD_NAME: "Run tests in zeppelin-web-angular"
 #      BUILD_FLAG: clean -DskipTests -DskipRat -pl "!beam,!hbase,!pig,!jdbc,!file,!flink,!ignite,!kylin,!lens,!cassandra,!elasticsearch,!bigquery,!alluxio,!scio,!livy,!groovy,!sap,!java,!geode,!neo4j,!hazelcastjet,!submarine,!sparql,!mongodb" -Phadoop2 -Pscala-2.11
 #      TEST_FLAG: package -DskipRat -pl zeppelin-web-angular -Pweb-angular -Phadoop2 -Pscala-2.11
