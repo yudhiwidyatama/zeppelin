@@ -31,12 +31,15 @@ import org.apache.zeppelin.interpreter.InterpreterResult;
 import org.apache.zeppelin.interpreter.InterpreterResultMessageOutput;
 import org.apache.zeppelin.interpreter.remote.RemoteInterpreterEventClient;
 import org.apache.zeppelin.interpreter.thrift.InterpreterCompletion;
+import org.apache.zeppelin.shaded.org.fusesource.jansi.AnsiConsole;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -66,6 +69,16 @@ public class SparkInterpreterTest {
     mockRemoteEventClient = mock(RemoteInterpreterEventClient.class);
   }
 
+  @Test
+  public void checkJansiTerminal() {
+    OutputStream out = AnsiConsole.wrapOutputStream(new ByteArrayOutputStream());
+    try {
+        out.close();
+    }
+    catch (Exception e) {
+        // ignore;
+    }
+  }
   @Test
   public void testSparkInterpreter() throws IOException, InterruptedException, InterpreterException {
     Properties properties = new Properties();
