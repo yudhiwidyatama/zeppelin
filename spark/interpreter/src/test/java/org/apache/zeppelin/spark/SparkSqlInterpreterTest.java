@@ -31,6 +31,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Properties;
@@ -48,6 +49,11 @@ public class SparkSqlInterpreterTest {
 
   @BeforeClass
   public static void setUp() throws Exception {
+    if (File.separator.equals("\\")) {
+      String downloadFolder = System.getProperty("user.home") + "/.cache";
+      // hint for hadoop to get winutils.exe
+      System.setProperty("hadoop.home.dir",downloadFolder + "/spark/spark-2.3.2-bin-hadoop2.7");
+    }
     Properties p = new Properties();
     p.setProperty(SparkStringConstants.MASTER_PROP_NAME, "local[4]");
     p.setProperty(SparkStringConstants.APP_NAME_PROP_NAME, "test");
