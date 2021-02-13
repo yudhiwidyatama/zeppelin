@@ -91,6 +91,7 @@ public class PythonUtils {
 
     // add ${ZEPPELIN_HOME}/interpreter/lib/python for all the cases
     pythonPath.add(zeppelinHome + "/interpreter/lib/python");
-    return StringUtils.join(pythonPath, ":");
+    String pathSeparator = (File.separator.equals("\\"))? ";" : ":";
+    return StringUtils.join(pythonPath, pathSeparator);
   }
 }
