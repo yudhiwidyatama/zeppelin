@@ -259,7 +259,9 @@ public class IPySparkInterpreterTest extends IPythonInterpreterTest {
       fail("Should not be able to start IPythonInterpreter");
     } catch (InterpreterException e) {
       String exceptionMsg = ExceptionUtils.getStackTrace(e);
-      TestCase.assertTrue(exceptionMsg, exceptionMsg.contains("No such file or directory"));
+      TestCase.assertTrue(exceptionMsg, exceptionMsg.contains("No such file or directory")
+              || exceptionMsg.contains("cannot find the file specified")
+      );
     }
   }
 
