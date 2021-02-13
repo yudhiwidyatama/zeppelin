@@ -121,6 +121,8 @@
                 <exclude>org/w3c/dom/**/*</exclude>
                 <exclude>org/xml/sax/*</exclude>
                 <exclude>org/xml/sax/**/*</exclude>
+
+                <exclude>org/fusesource/jansi/internal/*</exclude>
               </excludes>
             </relocation>
             <relocation>
